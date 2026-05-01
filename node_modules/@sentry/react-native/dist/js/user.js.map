@@ -1,0 +1,1 @@
+{"version":3,"file":"user.js","sourceRoot":"","sources":["../../src/js/user.ts"],"names":[],"mappings":"","sourcesContent":["import type { User } from '@sentry/core';\n\n/** Requires all the keys defined on User interface to be present on an object */\nexport type RequiredKeysUser = { [P in keyof Required<User>]: User[P] | undefined };\n"]}

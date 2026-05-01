@@ -1,0 +1,1 @@
+"use strict";Object.defineProperty(exports,"__esModule",{value:true});exports.OptionalReactNativeLocalize=void 0;var OptionalReactNativeLocalize=exports.OptionalReactNativeLocalize=undefined;try{exports.OptionalReactNativeLocalize=OptionalReactNativeLocalize=require('react-native-localize');}catch(e){}

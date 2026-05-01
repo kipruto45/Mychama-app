@@ -1,0 +1,1 @@
+{"version":3,"names":["_reactNative","require","Column","View","Inspector","_default","exports","default"],"sourceRoot":"../../../../src","sources":["components/gamma/SplitViewScreen.web.tsx"],"mappings":";;;;;;AAAA,IAAAA,YAAA,GAAAC,OAAA;AAEA,MAAMC,MAAM,GAAGC,iBAAI;AACnB,MAAMC,SAAS,GAAGD,iBAAI;AAAC,IAAAE,QAAA,GAAAC,OAAA,CAAAC,OAAA,GAER;EAAEL,MAAM;EAAEE;AAAU,CAAC","ignoreList":[]}

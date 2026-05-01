@@ -1,0 +1,1 @@
+{"version":3,"names":["TouchableNativeFeedback","RNTouchableNativeFeedback"],"sourceRoot":"../../../../src","sources":["components/touchables/TouchableNativeFeedback.tsx"],"mappings":";;AAAA,SAASA,uBAAuB,IAAIC,yBAAyB,QAAQ,cAAc;;AAEnF;AACA;AACA;AACA,MAAMD,uBAAuB,GAAGC,yBAAyB;AAEzD,eAAeD,uBAAuB","ignoreList":[]}

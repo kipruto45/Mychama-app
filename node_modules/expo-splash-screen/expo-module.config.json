@@ -1,0 +1,16 @@
+{
+  "platforms": ["apple", "android"],
+  "apple": {
+    "modules": ["SplashScreenModule"],
+    "appDelegateSubscribers": ["SplashScreenAppDelegateSubscriber"]
+  },
+  "android": {
+    "modules": ["expo.modules.splashscreen.SplashScreenModule"],
+    "publication": {
+      "groupId": "host.exp.exponent",
+      "artifactId": "expo.modules.splashscreen",
+      "version": "31.0.13",
+      "repository": "local-maven-repo"
+    }
+  }
+}

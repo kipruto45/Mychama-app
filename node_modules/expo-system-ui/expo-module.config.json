@@ -1,0 +1,15 @@
+{
+  "platforms": ["apple", "android"],
+  "apple": {
+    "modules": ["ExpoSystemUIModule"]
+  },
+  "android": {
+    "modules": ["expo.modules.systemui.SystemUIModule"],
+    "publication": {
+      "groupId": "host.exp.exponent",
+      "artifactId": "expo.modules.systemui",
+      "version": "6.0.9",
+      "repository": "local-maven-repo"
+    }
+  }
+}

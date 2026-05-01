@@ -1,0 +1,1 @@
+{"version":3,"names":["_reactNative","require","ScreenStackHost","View","_default","exports","default"],"sourceRoot":"../../../../src","sources":["components/gamma/ScreenStackHost.web.tsx"],"mappings":";;;;;;AAAA,IAAAA,YAAA,GAAAC,OAAA;AAQA,MAAMC,eAAe,GAAGC,iBAAI;AAAC,IAAAC,QAAA,GAAAC,OAAA,CAAAC,OAAA,GAEdJ,eAAe","ignoreList":[]}

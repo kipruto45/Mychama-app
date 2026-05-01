@@ -1,0 +1,1 @@
+{"version":3,"file":"rnlibraries.web.js","sourceRoot":"","sources":["../../../src/js/utils/rnlibraries.web.ts"],"names":[],"mappings":"AAEA,MAAM,CAAC,MAAM,oBAAoB,GAAkC,EAAE,CAAC","sourcesContent":["import type { ReactNativeLibrariesInterface } from './rnlibrariesinterface';\n\nexport const ReactNativeLibraries: ReactNativeLibrariesInterface = {};\n"]}

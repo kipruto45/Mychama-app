@@ -1,0 +1,105 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "host.exp.exponent",
+    "module": "expo.modules.splashscreen",
+    "version": "31.0.13",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.14.3"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseVariantReleaseApiPublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "files": [
+        {
+          "name": "expo.modules.splashscreen-31.0.13.aar",
+          "url": "expo.modules.splashscreen-31.0.13.aar",
+          "size": 20982,
+          "sha512": "6d19c8b71d3e0f047789065f4d18d55a368d31e83583ab9d8ef678438d82575e86e2c739bf72cf46e2b8b6aceae9980f2bb15dc4b1d88ad302bfd4c472fe0bf0",
+          "sha256": "d573ddb349c6d7be83a3af011aa6cbba291016170c1a9f7b9595d9c85b66b689",
+          "sha1": "e86d183a782dd40e220aebe08b02cc07e98eeb35",
+          "md5": "021e9b131ddfb76ef964f0d10e86e83b"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseRuntimePublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-jdk7",
+          "version": {
+            "requires": "2.1.20"
+          }
+        },
+        {
+          "group": "androidx.appcompat",
+          "module": "appcompat",
+          "version": {
+            "requires": "1.7.0"
+          }
+        },
+        {
+          "group": "androidx.core",
+          "module": "core-splashscreen",
+          "version": {
+            "requires": "1.2.0-alpha02"
+          }
+        },
+        {
+          "group": "com.facebook.react",
+          "module": "react-android"
+        }
+      ],
+      "files": [
+        {
+          "name": "expo.modules.splashscreen-31.0.13.aar",
+          "url": "expo.modules.splashscreen-31.0.13.aar",
+          "size": 20982,
+          "sha512": "6d19c8b71d3e0f047789065f4d18d55a368d31e83583ab9d8ef678438d82575e86e2c739bf72cf46e2b8b6aceae9980f2bb15dc4b1d88ad302bfd4c472fe0bf0",
+          "sha256": "d573ddb349c6d7be83a3af011aa6cbba291016170c1a9f7b9595d9c85b66b689",
+          "sha1": "e86d183a782dd40e220aebe08b02cc07e98eeb35",
+          "md5": "021e9b131ddfb76ef964f0d10e86e83b"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseSourcePublication",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "expo.modules.splashscreen-31.0.13-sources.jar",
+          "url": "expo.modules.splashscreen-31.0.13-sources.jar",
+          "size": 2909,
+          "sha512": "ab813e3ca1c1c77c9943cd8a83cd482a82fcf639fd70e6d8d51931087b09a774f30a41bfbb91d66383c63f3accc5db4f7404b183fbb07d410af7342f41a00130",
+          "sha256": "5f44eff39b83f3010a4c105406c6011dbc1a278c94adb520b42b9918943d331f",
+          "sha1": "2a591fc35f8c2242d548e18ca4b95a951a5184b1",
+          "md5": "3fade418f2c75aace929990a1e28315b"
+        }
+      ]
+    }
+  ]
+}

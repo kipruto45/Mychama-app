@@ -1,0 +1,15 @@
+{
+  "platforms": ["apple", "android"],
+  "apple": {
+    "modules": ["ImagePickerModule"]
+  },
+  "android": {
+    "modules": ["expo.modules.imagepicker.ImagePickerModule"],
+    "publication": {
+      "groupId": "host.exp.exponent",
+      "artifactId": "expo.modules.imagepicker",
+      "version": "17.0.11",
+      "repository": "local-maven-repo"
+    }
+  }
+}

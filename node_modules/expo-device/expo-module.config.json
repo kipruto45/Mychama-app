@@ -1,0 +1,15 @@
+{
+  "platforms": ["apple", "android", "web"],
+  "apple": {
+    "modules": ["DeviceModule"]
+  },
+  "android": {
+    "modules": ["expo.modules.device.DeviceModule"],
+    "publication": {
+      "groupId": "host.exp.exponent",
+      "artifactId": "expo.modules.device",
+      "version": "8.0.10",
+      "repository": "local-maven-repo"
+    }
+  }
+}

@@ -1,0 +1,1 @@
+../react-native-vector-icons/bin/fa-upgrade.sh

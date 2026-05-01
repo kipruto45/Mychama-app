@@ -1,0 +1,110 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "host.exp.exponent",
+    "module": "expo.modules.webbrowser",
+    "version": "15.0.11",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.14.3"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseVariantReleaseApiPublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "androidx.browser",
+          "module": "browser",
+          "version": {
+            "requires": "1.6.0"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "expo.modules.webbrowser-15.0.11.aar",
+          "url": "expo.modules.webbrowser-15.0.11.aar",
+          "size": 41740,
+          "sha512": "ab014a3a7bae9a8a22771127e357b6d926199a4d78aedd09b8f73fe9be1923d502721444ff78eec26e53d22e8f3717a39a1ae4006698c8ba285f425ec638dddf",
+          "sha256": "dcf177bf57c9ad585839cdc30851b94effd29d149fda0340ead1766b4f9673d7",
+          "sha1": "8f6945e42c9e7954120d7c2e25318d3212834416",
+          "md5": "3b740aaeee3041ab055cc397fda19ad9"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseRuntimePublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-jdk7",
+          "version": {
+            "requires": "2.1.20"
+          }
+        },
+        {
+          "group": "androidx.core",
+          "module": "core-ktx",
+          "version": {
+            "requires": "1.13.1"
+          }
+        },
+        {
+          "group": "androidx.browser",
+          "module": "browser",
+          "version": {
+            "requires": "1.6.0"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "expo.modules.webbrowser-15.0.11.aar",
+          "url": "expo.modules.webbrowser-15.0.11.aar",
+          "size": 41740,
+          "sha512": "ab014a3a7bae9a8a22771127e357b6d926199a4d78aedd09b8f73fe9be1923d502721444ff78eec26e53d22e8f3717a39a1ae4006698c8ba285f425ec638dddf",
+          "sha256": "dcf177bf57c9ad585839cdc30851b94effd29d149fda0340ead1766b4f9673d7",
+          "sha1": "8f6945e42c9e7954120d7c2e25318d3212834416",
+          "md5": "3b740aaeee3041ab055cc397fda19ad9"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseSourcePublication",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "expo.modules.webbrowser-15.0.11-sources.jar",
+          "url": "expo.modules.webbrowser-15.0.11-sources.jar",
+          "size": 6291,
+          "sha512": "cb205a40f7a6a699303dfb8283471b9c20b8f9a98e3f3be3a386b19e2cc71a6742f11900988303751b03ec3c936c489e41062404023fef8c9a5d93664ae2bc0b",
+          "sha256": "226ce0c4b274d09771d41e3e1fb1fee44cebb87a5c8c5304ca799f6889be9e50",
+          "sha1": "badf641b53a4fc051795aaa430b0a119b85a3dab",
+          "md5": "597229c8acbdb0cb66a8cc67bee5d3e2"
+        }
+      ]
+    }
+  ]
+}

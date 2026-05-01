@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>BareExpo</groupId>
+  <artifactId>expo.modules.image</artifactId>
+  <versioning>
+    <latest>3.0.11</latest>
+    <release>3.0.11</release>
+    <versions>
+      <version>3.0.11</version>
+    </versions>
+    <lastUpdated>20251205064609</lastUpdated>
+  </versioning>
+</metadata>

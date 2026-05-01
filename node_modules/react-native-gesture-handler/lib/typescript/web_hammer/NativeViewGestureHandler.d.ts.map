@@ -1,0 +1,1 @@
+{"version":3,"file":"NativeViewGestureHandler.d.ts","sourceRoot":"","sources":["../../../src/web_hammer/NativeViewGestureHandler.ts"],"names":[],"mappings":"AACA,OAAO,EAAE,cAAc,EAAE,MAAM,kBAAkB,CAAC;AAElD,OAAO,mBAAmB,MAAM,uBAAuB,CAAC;AAGxD,cAAM,wBAAyB,SAAQ,mBAAmB;IACxD,IAAI,QAAQ,YAEX;IAED,UAAU,CAAC,EAAE,EAAE,cAAc;CAiC9B;AAED,eAAe,wBAAwB,CAAC"}

@@ -1,0 +1,15 @@
+{
+  "platforms": ["apple", "android"],
+  "apple": {
+    "modules": ["WebBrowserModule"]
+  },
+  "android": {
+    "modules": ["expo.modules.webbrowser.WebBrowserModule"],
+    "publication": {
+      "groupId": "host.exp.exponent",
+      "artifactId": "expo.modules.webbrowser",
+      "version": "15.0.11",
+      "repository": "local-maven-repo"
+    }
+  }
+}

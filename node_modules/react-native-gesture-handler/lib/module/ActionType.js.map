@@ -1,0 +1,1 @@
+{"version":3,"names":["ActionType","REANIMATED_WORKLET","NATIVE_ANIMATED_EVENT","JS_FUNCTION_OLD_API","JS_FUNCTION_NEW_API"],"sourceRoot":"../../src","sources":["ActionType.ts"],"mappings":";;AAAA,OAAO,MAAMA,UAAU,GAAG;EACxBC,kBAAkB,EAAE,CAAC;EACrBC,qBAAqB,EAAE,CAAC;EACxBC,mBAAmB,EAAE,CAAC;EACtBC,mBAAmB,EAAE;AACvB,CAAU;;AAEV","ignoreList":[]}

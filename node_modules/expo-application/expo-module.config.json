@@ -1,0 +1,15 @@
+{
+  "platforms": ["apple", "android", "web"],
+  "apple": {
+    "modules": ["ApplicationModule"]
+  },
+  "android": {
+    "modules": ["expo.modules.application.ApplicationModule"],
+    "publication": {
+      "groupId": "host.exp.exponent",
+      "artifactId": "expo.modules.application",
+      "version": "7.0.8",
+      "repository": "local-maven-repo"
+    }
+  }
+}

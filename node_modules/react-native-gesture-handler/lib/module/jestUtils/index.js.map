@@ -1,0 +1,1 @@
+{"version":3,"names":["getByGestureTestId","fireGestureHandler"],"sourceRoot":"../../../src","sources":["jestUtils/index.ts"],"mappings":";;AAAA,SAASA,kBAAkB,EAAEC,kBAAkB,QAAQ,aAAa","ignoreList":[]}

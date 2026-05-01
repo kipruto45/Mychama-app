@@ -1,0 +1,109 @@
+{
+  "expo": {
+    "name": "MyChama",
+    "slug": "mychama-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/logo_hd.png",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/logo_hd.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#FFFFFF"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "associatedDomains": [
+        "applinks:mychama.app"
+      ],
+      "bundleIdentifier": "com.mychama.app",
+      "infoPlist": {
+        "NSFaceIDUsageDescription": "Use Face ID to authenticate securely",
+        "NSLocationWhenInUseUsageDescription": "Allow MyChama to access your location to support fraud prevention and compliance checks."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/logo_hd.png",
+        "backgroundColor": "#FFFFFF"
+      },
+      "googleServicesFile": "./google-services.json",
+      "package": "com.mychama.app",
+      "permissions": [
+        "USE_BIOMETRIC",
+        "USE_FINGERPRINT",
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_FINE_LOCATION"
+      ],
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "autoVerify": true,
+          "data": [
+            {
+              "scheme": "https",
+              "host": "mychama.app",
+              "pathPrefix": "/invite"
+            },
+            {
+              "scheme": "https",
+              "host": "mychama.app",
+              "pathPrefix": "/join/code"
+            }
+          ],
+          "category": [
+            "BROWSABLE",
+            "DEFAULT"
+          ]
+        },
+        {
+          "action": "VIEW",
+          "autoVerify": true,
+          "data": [
+            {
+              "scheme": "mychama",
+              "pathPrefix": "/invite"
+            },
+            {
+              "scheme": "mychama",
+              "host": "invite"
+            }
+          ],
+          "category": [
+            "BROWSABLE",
+            "DEFAULT"
+          ]
+        }
+      ]
+    },
+    "plugins": [
+      "expo-router",
+      "expo-secure-store",
+      "expo-font",
+      "expo-notifications",
+      [
+        "@sentry/react-native",
+        {
+          "organization": "tawi",
+          "project": "mychama-app"
+        }
+      ],
+      "expo-web-browser",
+      "@react-native-community/datetimepicker"
+    ],
+    "scheme": "mychama",
+    "web": {
+      "favicon": "./assets/logo_hd.png",
+      "backgroundColor": "#FFFFFF"
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "54304f4d-e3e2-4c27-85e5-d4aaf8da4162"
+      }
+    }
+  }
+}

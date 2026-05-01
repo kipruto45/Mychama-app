@@ -1,0 +1,26 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.addToCleanupQueue = addToCleanupQueue;
+exports.cleanupAsync = cleanupAsync;
+exports.default = cleanup;
+var _screen = require("./screen");
+const cleanupQueue = new Set();
+function cleanup() {
+  (0, _screen.clearRenderResult)();
+  cleanupQueue.forEach(fn => fn());
+  cleanupQueue.clear();
+}
+async function cleanupAsync() {
+  (0, _screen.clearRenderResult)();
+  for (const fn of cleanupQueue) {
+    await fn();
+  }
+  cleanupQueue.clear();
+}
+function addToCleanupQueue(fn) {
+  cleanupQueue.add(fn);
+}
+//# sourceMappingURL=cleanup.js.map

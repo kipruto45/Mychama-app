@@ -1,0 +1,15 @@
+':tea: Detox':
+- changed-files:
+  - any-glob-to-any-file: 'detox/**/*'
+
+':test_tube: Tests':
+- changed-files:
+  - any-glob-to-any-file: ['__tests__/**/*', '/**/__tests__/**/*']
+
+':toolbox: Infra':
+- changed-files:
+  - any-glob-to-any-file: ['.github/**/*', '.circleci/**/*']
+  
+':books: Documentation':
+- changed-files:
+  - any-glob-to-any-file: 'README.md'

@@ -1,0 +1,1 @@
+{"version":3,"file":"createNativeWrapper.d.ts","sourceRoot":"","sources":["../../../src/handlers/createNativeWrapper.tsx"],"names":[],"mappings":"AAAA,OAAO,KAAK,KAAK,MAAM,OAAO,CAAC;AAG/B,OAAO,EAEL,6BAA6B,EAE9B,MAAM,4BAA4B,CAAC;AAepC,MAAM,CAAC,OAAO,UAAU,mBAAmB,CAAC,CAAC,EAC3C,SAAS,EAAE,KAAK,CAAC,aAAa,CAAC,CAAC,CAAC,EACjC,MAAM,GAAE,QAAQ,CAAC,6BAA6B,CAAM,6IAiErD"}

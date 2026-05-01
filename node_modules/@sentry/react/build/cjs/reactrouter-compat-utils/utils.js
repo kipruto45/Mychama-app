@@ -1,0 +1,265 @@
+Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+
+// Global variables that these utilities depend on
+let _matchRoutes;
+let _stripBasename = false;
+
+/**
+ * Initialize function to set dependencies that the router utilities need.
+ * Must be called before using any of the exported utility functions.
+ */
+function initializeRouterUtils(matchRoutes, stripBasename = false) {
+  _matchRoutes = matchRoutes;
+  _stripBasename = stripBasename;
+}
+
+// Helper functions
+function pickPath(match) {
+  return trimWildcard(match.route.path || '');
+}
+
+function pickSplat(match) {
+  return match.params['*'] || '';
+}
+
+function trimWildcard(path) {
+  return path[path.length - 1] === '*' ? path.slice(0, -1) : path;
+}
+
+function trimSlash(path) {
+  return path[path.length - 1] === '/' ? path.slice(0, -1) : path;
+}
+
+/**
+ * Checks if a path ends with a wildcard character (*).
+ */
+function pathEndsWithWildcard(path) {
+  return path.endsWith('*');
+}
+
+/**
+ * Checks if a path is a wildcard and has child routes.
+ */
+function pathIsWildcardAndHasChildren(path, branch) {
+  return (pathEndsWithWildcard(path) && !!branch.route.children?.length) || false;
+}
+
+function routeIsDescendant(route) {
+  return !!(!route.children && route.element && route.path?.endsWith('/*'));
+}
+
+function sendIndexPath(pathBuilder, pathname, basename) {
+  const reconstructedPath = pathBuilder || _stripBasename ? stripBasenameFromPathname(pathname, basename) : pathname;
+
+  const formattedPath =
+    // If the path ends with a slash, remove it
+    reconstructedPath[reconstructedPath.length - 1] === '/'
+      ? reconstructedPath.slice(0, -1)
+      : // If the path ends with a wildcard, remove it
+        reconstructedPath.slice(-2) === '/*'
+        ? reconstructedPath.slice(0, -1)
+        : reconstructedPath;
+
+  return [formattedPath, 'route'];
+}
+
+/**
+ * Returns the number of URL segments in the given URL string.
+ * Splits at '/' or '\/' to handle regex URLs correctly.
+ *
+ * @param url - The URL string to segment.
+ * @returns The number of segments in the URL.
+ */
+function getNumberOfUrlSegments(url) {
+  // split at '/' or at '\/' to split regex urls correctly
+  return url.split(/\\?\//).filter(s => s.length > 0 && s !== ',').length;
+}
+
+/**
+ * Strip the basename from a pathname if exists.
+ *
+ * Vendored and modified from `react-router`
+ * https://github.com/remix-run/react-router/blob/462bb712156a3f739d6139a0f14810b76b002df6/packages/router/utils.ts#L1038
+ */
+function stripBasenameFromPathname(pathname, basename) {
+  if (!basename || basename === '/') {
+    return pathname;
+  }
+
+  if (!pathname.toLowerCase().startsWith(basename.toLowerCase())) {
+    return pathname;
+  }
+
+  // We want to leave trailing slash behavior in the user's control, so if they
+  // specify a basename with a trailing slash, we should support it
+  const startIndex = basename.endsWith('/') ? basename.length - 1 : basename.length;
+  const nextChar = pathname.charAt(startIndex);
+  if (nextChar && nextChar !== '/') {
+    // pathname does not start with basename/
+    return pathname;
+  }
+
+  return pathname.slice(startIndex) || '/';
+}
+
+// Exported utility functions
+
+/**
+ * Ensures a path string starts with a forward slash.
+ */
+function prefixWithSlash(path) {
+  return path[0] === '/' ? path : `/${path}`;
+}
+
+/**
+ * Rebuilds the route path from all available routes by matching against the current location.
+ */
+function rebuildRoutePathFromAllRoutes(allRoutes, location) {
+  const matchedRoutes = _matchRoutes(allRoutes, location) ;
+
+  if (!matchedRoutes || matchedRoutes.length === 0) {
+    return '';
+  }
+
+  for (const match of matchedRoutes) {
+    if (match.route.path && match.route.path !== '*') {
+      const path = pickPath(match);
+      const strippedPath = stripBasenameFromPathname(location.pathname, prefixWithSlash(match.pathnameBase));
+
+      if (location.pathname === strippedPath) {
+        return trimSlash(strippedPath);
+      }
+
+      return trimSlash(
+        trimSlash(path || '') +
+          prefixWithSlash(
+            rebuildRoutePathFromAllRoutes(
+              allRoutes.filter(route => route !== match.route),
+              {
+                pathname: strippedPath,
+              },
+            ),
+          ),
+      );
+    }
+  }
+
+  return '';
+}
+
+/**
+ * Checks if the current location is inside a descendant route (route with splat parameter).
+ */
+function locationIsInsideDescendantRoute(location, routes) {
+  const matchedRoutes = _matchRoutes(routes, location) ;
+
+  if (matchedRoutes) {
+    for (const match of matchedRoutes) {
+      if (routeIsDescendant(match.route) && pickSplat(match)) {
+        return true;
+      }
+    }
+  }
+
+  return false;
+}
+
+/**
+ * Gets a normalized route name and transaction source from the current routes and location.
+ */
+function getNormalizedName(
+  routes,
+  location,
+  branches,
+  basename = '',
+) {
+  if (!routes || routes.length === 0) {
+    return [_stripBasename ? stripBasenameFromPathname(location.pathname, basename) : location.pathname, 'url'];
+  }
+
+  let pathBuilder = '';
+
+  if (branches) {
+    for (const branch of branches) {
+      const route = branch.route;
+      if (route) {
+        // Early return if index route
+        if (route.index) {
+          return sendIndexPath(pathBuilder, branch.pathname, basename);
+        }
+        const path = route.path;
+
+        // If path is not a wildcard and has no child routes, append the path
+        if (path && !pathIsWildcardAndHasChildren(path, branch)) {
+          const newPath = path[0] === '/' || pathBuilder[pathBuilder.length - 1] === '/' ? path : `/${path}`;
+          pathBuilder = trimSlash(pathBuilder) + prefixWithSlash(newPath);
+
+          // If the path matches the current location, return the path
+          if (trimSlash(location.pathname) === trimSlash(basename + branch.pathname)) {
+            if (
+              // If the route defined on the element is something like
+              // <Route path="/stores/:storeId/products/:productId" element={<div>Product</div>} />
+              // We should check against the branch.pathname for the number of / separators
+              getNumberOfUrlSegments(pathBuilder) !== getNumberOfUrlSegments(branch.pathname) &&
+              // We should not count wildcard operators in the url segments calculation
+              !pathEndsWithWildcard(pathBuilder)
+            ) {
+              return [(_stripBasename ? '' : basename) + newPath, 'route'];
+            }
+
+            // if the last character of the pathbuilder is a wildcard and there are children, remove the wildcard
+            if (pathIsWildcardAndHasChildren(pathBuilder, branch)) {
+              pathBuilder = pathBuilder.slice(0, -1);
+            }
+
+            return [(_stripBasename ? '' : basename) + pathBuilder, 'route'];
+          }
+        }
+      }
+    }
+  }
+
+  const fallbackTransactionName = _stripBasename
+    ? stripBasenameFromPathname(location.pathname, basename)
+    : location.pathname || '';
+
+  return [fallbackTransactionName, 'url'];
+}
+
+/**
+ * Shared helper function to resolve route name and source
+ */
+function resolveRouteNameAndSource(
+  location,
+  routes,
+  allRoutes,
+  branches,
+  basename = '',
+) {
+  let name;
+  let source = 'url';
+
+  const isInDescendantRoute = locationIsInsideDescendantRoute(location, allRoutes);
+
+  if (isInDescendantRoute) {
+    name = prefixWithSlash(rebuildRoutePathFromAllRoutes(allRoutes, location));
+    source = 'route';
+  }
+
+  if (!isInDescendantRoute || !name) {
+    [name, source] = getNormalizedName(routes, location, branches, basename);
+  }
+
+  return [name || location.pathname, source];
+}
+
+exports.getNormalizedName = getNormalizedName;
+exports.getNumberOfUrlSegments = getNumberOfUrlSegments;
+exports.initializeRouterUtils = initializeRouterUtils;
+exports.locationIsInsideDescendantRoute = locationIsInsideDescendantRoute;
+exports.pathEndsWithWildcard = pathEndsWithWildcard;
+exports.pathIsWildcardAndHasChildren = pathIsWildcardAndHasChildren;
+exports.prefixWithSlash = prefixWithSlash;
+exports.rebuildRoutePathFromAllRoutes = rebuildRoutePathFromAllRoutes;
+exports.resolveRouteNameAndSource = resolveRouteNameAndSource;
+//# sourceMappingURL=utils.js.map

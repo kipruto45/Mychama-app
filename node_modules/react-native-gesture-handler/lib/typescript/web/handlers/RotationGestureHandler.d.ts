@@ -1,0 +1,28 @@
+import { AdaptedEvent } from '../interfaces';
+import GestureHandler from './GestureHandler';
+export default class RotationGestureHandler extends GestureHandler {
+    private rotation;
+    private velocity;
+    private cachedAnchorX;
+    private cachedAnchorY;
+    private rotationGestureListener;
+    private rotationGestureDetector;
+    init(ref: number, propsRef: React.RefObject<unknown>): void;
+    protected transformNativeEvent(): {
+        rotation: number;
+        anchorX: number;
+        anchorY: number;
+        velocity: number;
+    };
+    getAnchorX(): number;
+    getAnchorY(): number;
+    protected onPointerDown(event: AdaptedEvent): void;
+    protected onPointerAdd(event: AdaptedEvent): void;
+    protected onPointerMove(event: AdaptedEvent): void;
+    protected onPointerOutOfBounds(event: AdaptedEvent): void;
+    protected onPointerUp(event: AdaptedEvent): void;
+    protected onPointerRemove(event: AdaptedEvent): void;
+    protected tryBegin(): void;
+    protected onReset(): void;
+}
+//# sourceMappingURL=RotationGestureHandler.d.ts.map

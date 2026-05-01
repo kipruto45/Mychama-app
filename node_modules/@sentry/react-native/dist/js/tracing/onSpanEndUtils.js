@@ -1,0 +1,112 @@
+import { debug, getSpanDescendants, SPAN_STATUS_ERROR, spanToJSON } from '@sentry/core';
+import { AppState } from 'react-native';
+import { isRootSpan, isSentrySpan } from '../utils/span';
+/**
+ * Hooks on span end event to execute a callback when the span ends.
+ */
+export function onThisSpanEnd(client, span, callback) {
+    client.on('spanEnd', (endedSpan) => {
+        if (span !== endedSpan) {
+            return;
+        }
+        callback(endedSpan);
+    });
+}
+export const adjustTransactionDuration = (client, span, maxDurationMs) => {
+    if (!isRootSpan(span)) {
+        debug.warn('Not sampling empty back spans only works for Sentry Transactions (Root Spans).');
+        return;
+    }
+    client.on('spanEnd', (endedSpan) => {
+        if (endedSpan !== span) {
+            return;
+        }
+        const endTimestamp = spanToJSON(span).timestamp;
+        const startTimestamp = spanToJSON(span).start_timestamp;
+        if (!endTimestamp || !startTimestamp) {
+            return;
+        }
+        const diff = endTimestamp - startTimestamp;
+        const isOutdatedTransaction = endTimestamp && (diff > maxDurationMs || diff < 0);
+        if (isOutdatedTransaction) {
+            span.setStatus({ code: SPAN_STATUS_ERROR, message: 'deadline_exceeded' });
+            // TODO: check where was used, might be possible to delete
+            span.setAttribute('maxTransactionDurationExceeded', 'true');
+        }
+    });
+};
+export const ignoreEmptyBackNavigation = (client, span) => {
+    if (!client) {
+        debug.warn('Could not hook on spanEnd event because client is not defined.');
+        return;
+    }
+    if (!span) {
+        debug.warn('Could not hook on spanEnd event because span is not defined.');
+        return;
+    }
+    if (!isRootSpan(span) || !isSentrySpan(span)) {
+        debug.warn('Not sampling empty back spans only works for Sentry Transactions (Root Spans).');
+        return;
+    }
+    client.on('spanEnd', (endedSpan) => {
+        var _a;
+        if (endedSpan !== span) {
+            return;
+        }
+        if (!((_a = spanToJSON(span).data) === null || _a === void 0 ? void 0 : _a['route.has_been_seen'])) {
+            return;
+        }
+        const children = getSpanDescendants(span);
+        const filtered = children.filter(child => child.spanContext().spanId !== span.spanContext().spanId &&
+            spanToJSON(child).op !== 'ui.load.initial_display' &&
+            spanToJSON(child).op !== 'navigation.processing');
+        if (filtered.length <= 0) {
+            // filter children must include at least one span not created by the navigation automatic instrumentation
+            debug.log('Not sampling transaction as route has been seen before. Pass ignoreEmptyBackNavigationTransactions = false to disable this feature.');
+            // Route has been seen before and has no child spans.
+            span['_sampled'] = false;
+        }
+    });
+};
+/**
+ * Idle Transaction callback to only sample transactions with child spans.
+ * To avoid side effects of other callbacks this should be hooked as the last callback.
+ */
+export const onlySampleIfChildSpans = (client, span) => {
+    if (!isRootSpan(span) || !isSentrySpan(span)) {
+        debug.warn('Not sampling childless spans only works for Sentry Transactions (Root Spans).');
+        return;
+    }
+    client.on('spanEnd', (endedSpan) => {
+        if (endedSpan !== span) {
+            return;
+        }
+        const children = getSpanDescendants(span);
+        if (children.length <= 1) {
+            // Span always has at lest one child, itself
+            debug.log(`Not sampling as ${spanToJSON(span).op} transaction has no child spans.`);
+            span['_sampled'] = false;
+        }
+    });
+};
+/**
+ * Hooks on AppState change to cancel the span if the app goes background.
+ */
+export const cancelInBackground = (client, span) => {
+    const subscription = AppState.addEventListener('change', (newState) => {
+        if (newState === 'background') {
+            debug.log(`Setting ${spanToJSON(span).op} transaction to cancelled because the app is in the background.`);
+            span.setStatus({ code: SPAN_STATUS_ERROR, message: 'cancelled' });
+            span.end();
+        }
+    });
+    subscription &&
+        client.on('spanEnd', (endedSpan) => {
+            var _a;
+            if (endedSpan === span) {
+                debug.log(`Removing AppState listener for ${spanToJSON(span).op} transaction.`);
+                (_a = subscription === null || subscription === void 0 ? void 0 : subscription.remove) === null || _a === void 0 ? void 0 : _a.call(subscription);
+            }
+        });
+};
+//# sourceMappingURL=onSpanEndUtils.js.map

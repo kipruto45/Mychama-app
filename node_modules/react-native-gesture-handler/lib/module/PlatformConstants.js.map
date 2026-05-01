@@ -1,0 +1,1 @@
+{"version":3,"names":["NativeModules","Platform","PlatformConstants","constants"],"sourceRoot":"../../src","sources":["PlatformConstants.ts"],"mappings":";;AAAA,SAASA,aAAa,EAAEC,QAAQ,QAAQ,cAAc;AAMtD,eAAgBD,aAAa,EAAEE,iBAAiB,IAC9CD,QAAQ,CAACE,SAAS","ignoreList":[]}

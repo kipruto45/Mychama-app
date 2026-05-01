@@ -1,0 +1,1 @@
+{"version":3,"file":"CustomMask.web.d.ts","sourceRoot":"","sources":["../../../src/js/replay/CustomMask.web.tsx"],"names":[],"mappings":"AAAA,OAAO,KAAK,KAAK,MAAM,OAAO,CAAC;AAC/B,OAAO,KAAK,EAAE,SAAS,EAAE,MAAM,cAAc,CAAC;AAc9C,QAAA,MAAM,IAAI,UAAW,SAAS,KAAG,MAAM,YAQtC,CAAC;AAEF,QAAA,MAAM,MAAM,UAAW,SAAS,KAAG,MAAM,YAQxC,CAAC;AAEF,OAAO,EAAE,IAAI,EAAE,MAAM,EAAE,CAAC"}

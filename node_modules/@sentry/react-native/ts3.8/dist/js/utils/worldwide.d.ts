@@ -1,0 +1,50 @@
+/// <reference types="react-native" />
+import type { InternalGlobal } from '@sentry/core';
+import type { ErrorUtils } from 'react-native/types';
+import type { ExpoGlobalObject } from './expoglobalobject';
+export interface HermesPromiseRejectionTrackingOptions {
+    allRejections: boolean;
+    onUnhandled: (id: string, error: unknown) => void;
+    onHandled: (id: string) => void;
+}
+/** Internal Global object interface with common and Sentry specific properties */
+export interface ReactNativeInternalGlobal extends InternalGlobal {
+    __sentry_rn_v4_registered?: boolean;
+    __sentry_rn_v5_registered?: boolean;
+    HermesInternal?: {
+        getRuntimeProperties?: () => Record<string, string | undefined>;
+        enablePromiseRejectionTracker?: (options: HermesPromiseRejectionTrackingOptions) => void;
+        hasPromise?: () => boolean;
+    };
+    Promise: unknown;
+    __turboModuleProxy: unknown;
+    RN$Bridgeless: unknown;
+    nativeFabricUIManager: unknown;
+    ErrorUtils?: ErrorUtils;
+    expo?: ExpoGlobalObject;
+    XMLHttpRequest?: typeof XMLHttpRequest;
+    process?: {
+        env?: {
+            ___SENTRY_METRO_DEV_SERVER___?: string;
+        };
+    };
+    __BUNDLE_START_TIME__?: number;
+    nativePerformanceNow?: () => number;
+    TextEncoder?: TextEncoder;
+    alert?: (message: string) => void;
+    SENTRY_RELEASE?: {
+        /** Used by Sentry Webpack Plugin, not used by RN, only to silence TS */
+        id?: string;
+        name?: string;
+        version?: string;
+    };
+}
+type TextEncoder = {
+    new (): {
+        encode(input?: string): Uint8Array;
+    };
+};
+/** Get's the global object for the current JavaScript runtime */
+export declare const RN_GLOBAL_OBJ: ReactNativeInternalGlobal;
+export {};
+//# sourceMappingURL=worldwide.d.ts.map

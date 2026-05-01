@@ -1,0 +1,1 @@
+{"version":3,"file":"constants.js","sourceRoot":"","sources":["../../../src/js/profiling/constants.ts"],"names":[],"mappings":"AAAA,MAAM,CAAC,MAAM,uBAAuB,GAAG,EAAE,GAAG,GAAG,CAAC","sourcesContent":["export const MAX_PROFILE_DURATION_MS = 30 * 1e3;\n"]}

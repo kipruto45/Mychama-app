@@ -1,0 +1,1 @@
+{"version":3,"file":"sdkinfo.d.ts","sourceRoot":"","sources":["../../../src/js/integrations/sdkinfo.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAS,WAAW,EAAW,OAAO,IAAI,WAAW,EAAE,MAAM,cAAc,CAAC;AAQxF,KAAK,cAAc,GAAG,IAAI,CAAC,QAAQ,CAAC,WAAW,CAAC,EAAE,MAAM,GAAG,UAAU,GAAG,SAAS,CAAC,CAAC;AAEnF,eAAO,MAAM,cAAc,EAAE,cAS5B,CAAC;AAEF,sCAAsC;AACtC,eAAO,MAAM,kBAAkB,QAAO,WAUrC,CAAC"}

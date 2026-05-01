@@ -1,0 +1,1 @@
+"use strict";Object.defineProperty(exports,"__esModule",{value:true});exports.OptionalExpoDevice=void 0;var _reactNative=require("react-native");var OptionalExpoDevice=exports.OptionalExpoDevice=undefined;try{exports.OptionalExpoDevice=OptionalExpoDevice=_reactNative.Platform.select({macos:undefined,"default":require('expo-device')});}catch(e){}

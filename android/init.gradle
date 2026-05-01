@@ -1,0 +1,33 @@
+// Override Java toolchain to use Java 21 for all Java version requirements
+gradle.allprojects { project ->
+  project.pluginManager.withPlugin('java') {
+    project.java {
+      toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+        // Use any vendor (including OpenJDK)
+        vendor = JvmVendorSpec.matching(".*")
+      }
+    }
+  }
+}
+
+// Also configure Gradle itself to use Java 21
+gradle.allprojects { project ->
+  project.pluginManager.withPlugin('org.jetbrains.kotlin.android') {
+    project.java {
+      toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+        vendor = JvmVendorSpec.matching(".*")
+      }
+    }
+  }
+}
+
+// Configure Kotlin toolchain as well
+gradle.allprojects { project ->
+  project.pluginManager.withPlugin('org.jetbrains.kotlin.android') {
+    project.kotlin {
+      jvmToolchain(21)
+    }
+  }
+}

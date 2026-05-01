@@ -1,0 +1,103 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "host.exp.exponent",
+    "module": "expo.modules.imageloader",
+    "version": "6.0.0",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.14.3"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseVariantReleaseApiPublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "com.github.bumptech.glide",
+          "module": "glide",
+          "version": {
+            "requires": "4.16.0"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "expo.modules.imageloader-6.0.0.aar",
+          "url": "expo.modules.imageloader-6.0.0.aar",
+          "size": 10510,
+          "sha512": "39dd45977d35f1bf3abb5cd07d95aa0c17bc42785e9e75dfa2fe621fa80f197acd2eedb1517f50a1b63f83705378575dc06b4f948ba8434c4e5fb1d28ce98018",
+          "sha256": "352d0424a05612c6eb98a2f31708626657ce93e94946b4a5573c9bd847128468",
+          "sha1": "7363cbd9c137c65bd1ae8a2e1ca61a31bedaa4f8",
+          "md5": "d275db858ff7957dbeae00c5e5faa788"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseRuntimePublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-jdk7",
+          "version": {
+            "requires": "2.1.20"
+          }
+        },
+        {
+          "group": "com.github.bumptech.glide",
+          "module": "glide",
+          "version": {
+            "requires": "4.16.0"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "expo.modules.imageloader-6.0.0.aar",
+          "url": "expo.modules.imageloader-6.0.0.aar",
+          "size": 10510,
+          "sha512": "39dd45977d35f1bf3abb5cd07d95aa0c17bc42785e9e75dfa2fe621fa80f197acd2eedb1517f50a1b63f83705378575dc06b4f948ba8434c4e5fb1d28ce98018",
+          "sha256": "352d0424a05612c6eb98a2f31708626657ce93e94946b4a5573c9bd847128468",
+          "sha1": "7363cbd9c137c65bd1ae8a2e1ca61a31bedaa4f8",
+          "md5": "d275db858ff7957dbeae00c5e5faa788"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseSourcePublication",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "expo.modules.imageloader-6.0.0-sources.jar",
+          "url": "expo.modules.imageloader-6.0.0-sources.jar",
+          "size": 3464,
+          "sha512": "c24d298c590fb988c40b922ee8f819c729d252df77b14ce7afef8d6c4727f3df461aadaf2eca428e535b8cca5a663eb6be4ac801b301ca7f1471191a4240cb46",
+          "sha256": "629413154ddf0f463f69efd14daf0ad2d6b238c6f15a5774e4d527515466073e",
+          "sha1": "ab7a6fa2440f2d905cc3e8956262a1bb42dd7fd4",
+          "md5": "18247aba20c02293002ede5352d767e2"
+        }
+      ]
+    }
+  ]
+}

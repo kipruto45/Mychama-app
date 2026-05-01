@@ -1,0 +1,87 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "host.exp.exponent",
+    "module": "expo.modules.lineargradient",
+    "version": "15.0.8",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.14.3"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseVariantReleaseApiPublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "files": [
+        {
+          "name": "expo.modules.lineargradient-15.0.8.aar",
+          "url": "expo.modules.lineargradient-15.0.8.aar",
+          "size": 17672,
+          "sha512": "09f810bcfc19c386976c21e5e78d1f7a2260e1d99cf4fa72b95c55a10fd4c1063baa87cd742927a647e45c81593388837759a078f98065541297a564c12b3e06",
+          "sha256": "ed018e65e5a3b827ef2199458929809d68ecb16c549aca0554ef4a40e2e2fe4b",
+          "sha1": "2416f94d3b48906a910dffc515d2816866320662",
+          "md5": "b69af38314586b88173f2a984b9e4b05"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseRuntimePublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib-jdk7",
+          "version": {
+            "requires": "2.1.20"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "expo.modules.lineargradient-15.0.8.aar",
+          "url": "expo.modules.lineargradient-15.0.8.aar",
+          "size": 17672,
+          "sha512": "09f810bcfc19c386976c21e5e78d1f7a2260e1d99cf4fa72b95c55a10fd4c1063baa87cd742927a647e45c81593388837759a078f98065541297a564c12b3e06",
+          "sha256": "ed018e65e5a3b827ef2199458929809d68ecb16c549aca0554ef4a40e2e2fe4b",
+          "sha1": "2416f94d3b48906a910dffc515d2816866320662",
+          "md5": "b69af38314586b88173f2a984b9e4b05"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseSourcePublication",
+      "attributes": {
+        "org.gradle.category": "documentation",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.docstype": "sources",
+        "org.gradle.usage": "java-runtime"
+      },
+      "files": [
+        {
+          "name": "expo.modules.lineargradient-15.0.8-sources.jar",
+          "url": "expo.modules.lineargradient-15.0.8-sources.jar",
+          "size": 2864,
+          "sha512": "37813076b36458347d8f80c6cabd6a99901016276bbe16918e6eab979d6fd220330bcf89e177fd316b377cf5b31c0b0656706ac56451572752be3811d2c0b204",
+          "sha256": "5be3b2238a44df4e227276c7044156e01afb9f6b18c5d3cfece20636d15b796f",
+          "sha1": "0cc54a01e0cee6b61567ee5abdc96912d7597cb5",
+          "md5": "d05eac71c609f3bd7d04ac8986934914"
+        }
+      ]
+    }
+  ]
+}

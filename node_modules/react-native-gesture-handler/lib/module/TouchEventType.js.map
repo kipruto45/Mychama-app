@@ -1,0 +1,1 @@
+{"version":3,"names":["TouchEventType","UNDETERMINED","TOUCHES_DOWN","TOUCHES_MOVE","TOUCHES_UP","TOUCHES_CANCELLED"],"sourceRoot":"../../src","sources":["TouchEventType.ts"],"mappings":";;AAAA,OAAO,MAAMA,cAAc,GAAG;EAC5BC,YAAY,EAAE,CAAC;EACfC,YAAY,EAAE,CAAC;EACfC,YAAY,EAAE,CAAC;EACfC,UAAU,EAAE,CAAC;EACbC,iBAAiB,EAAE;AACrB,CAAU;;AAEV","ignoreList":[]}

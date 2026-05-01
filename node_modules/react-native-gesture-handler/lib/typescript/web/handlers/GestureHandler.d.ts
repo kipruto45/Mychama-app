@@ -1,0 +1,103 @@
+import { State } from '../../State';
+import { Config, AdaptedEvent } from '../interfaces';
+import EventManager from '../tools/EventManager';
+import PointerTracker from '../tools/PointerTracker';
+import IGestureHandler from './IGestureHandler';
+import { MouseButton } from '../../handlers/gestureHandlerCommon';
+import { PointerType } from '../../PointerType';
+import { GestureHandlerDelegate } from '../tools/GestureHandlerDelegate';
+export default abstract class GestureHandler implements IGestureHandler {
+    private lastSentState;
+    private _state;
+    private _shouldCancelWhenOutside;
+    protected hasCustomActivationCriteria: boolean;
+    private _enabled;
+    private viewRef;
+    private propsRef;
+    private _handlerTag;
+    private _config;
+    private _tracker;
+    private _activationIndex;
+    private _awaiting;
+    private _active;
+    private _shouldResetProgress;
+    private _pointerType;
+    private _delegate;
+    constructor(delegate: GestureHandlerDelegate<unknown, IGestureHandler>);
+    protected init(viewRef: number, propsRef: React.RefObject<unknown>): void;
+    attachEventManager(manager: EventManager<unknown>): void;
+    protected onCancel(): void;
+    protected onReset(): void;
+    protected resetProgress(): void;
+    reset(): void;
+    moveToState(newState: State, sendIfDisabled?: boolean): void;
+    protected onStateChange(_newState: State, _oldState: State): void;
+    begin(): void;
+    /**
+     * @param {boolean} sendIfDisabled - Used when handler becomes disabled. With this flag orchestrator will be forced to send fail event
+     */
+    fail(sendIfDisabled?: boolean): void;
+    /**
+     * @param {boolean} sendIfDisabled - Used when handler becomes disabled. With this flag orchestrator will be forced to send cancel event
+     */
+    cancel(sendIfDisabled?: boolean): void;
+    activate(force?: boolean): void;
+    end(): void;
+    getShouldResetProgress(): boolean;
+    setShouldResetProgress(value: boolean): void;
+    shouldWaitForHandlerFailure(handler: IGestureHandler): boolean;
+    shouldRequireToWaitForFailure(handler: IGestureHandler): boolean;
+    shouldRecognizeSimultaneously(handler: IGestureHandler): boolean;
+    shouldBeCancelledByOther(handler: IGestureHandler): boolean;
+    protected onPointerDown(event: AdaptedEvent): void;
+    protected onPointerAdd(event: AdaptedEvent): void;
+    protected onPointerUp(event: AdaptedEvent): void;
+    protected onPointerRemove(event: AdaptedEvent): void;
+    protected onPointerMove(event: AdaptedEvent): void;
+    protected onPointerLeave(event: AdaptedEvent): void;
+    protected onPointerEnter(event: AdaptedEvent): void;
+    protected onPointerCancel(event: AdaptedEvent): void;
+    protected onPointerOutOfBounds(event: AdaptedEvent): void;
+    protected onPointerMoveOver(_event: AdaptedEvent): void;
+    protected onPointerMoveOut(_event: AdaptedEvent): void;
+    protected onWheel(_event: AdaptedEvent): void;
+    protected tryToSendMoveEvent(out: boolean, event: AdaptedEvent): void;
+    protected tryToSendTouchEvent(event: AdaptedEvent): void;
+    sendTouchEvent(event: AdaptedEvent): void;
+    sendEvent: (newState: State, oldState: State) => void;
+    private transformEventData;
+    private transformTouchEvent;
+    private cancelTouches;
+    protected transformNativeEvent(): Record<string, unknown>;
+    updateGestureConfig({ enabled, ...props }: Config): void;
+    protected checkCustomActivationCriteria(criterias: string[]): void;
+    private validateHitSlops;
+    private checkHitSlop;
+    isButtonInConfig(mouseButton: MouseButton | undefined): number | true | undefined;
+    protected resetConfig(): void;
+    onDestroy(): void;
+    get handlerTag(): number;
+    set handlerTag(value: number);
+    get config(): Config;
+    get delegate(): GestureHandlerDelegate<unknown, IGestureHandler>;
+    get tracker(): PointerTracker;
+    get state(): State;
+    protected set state(value: State);
+    get shouldCancelWhenOutside(): boolean;
+    protected set shouldCancelWhenOutside(value: boolean);
+    get enabled(): boolean;
+    protected set enabled(value: boolean);
+    get pointerType(): PointerType;
+    protected set pointerType(value: PointerType);
+    get active(): boolean;
+    protected set active(value: boolean);
+    get awaiting(): boolean;
+    protected set awaiting(value: boolean);
+    get activationIndex(): number;
+    protected set activationIndex(value: number);
+    get shouldResetProgress(): boolean;
+    protected set shouldResetProgress(value: boolean);
+    getTrackedPointersID(): number[];
+    private isFinished;
+}
+//# sourceMappingURL=GestureHandler.d.ts.map

@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "230534988583",
+    "project_id": "campushub-489622",
+    "storage_bucket": "campushub-489622.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:230534988583:android:5542b690da8d2d2b465f02",
+        "android_client_info": {
+          "package_name": "com.campushub.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "230534988583-50pm0vvogq94535i10mu5e0iqos8l7jk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDt-Kjcn1_kMCcmtslunmsxdDnPjKjZjA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "230534988583-50pm0vvogq94535i10mu5e0iqos8l7jk.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "230534988583-5sedcg7aq8jpp08bf0j8bc28s6au4tkd.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.campushub.app"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:230534988583:android:f77bc67e6cf74a87465f02",
+        "android_client_info": {
+          "package_name": "mychama.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "230534988583-50pm0vvogq94535i10mu5e0iqos8l7jk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDt-Kjcn1_kMCcmtslunmsxdDnPjKjZjA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "230534988583-50pm0vvogq94535i10mu5e0iqos8l7jk.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "230534988583-5sedcg7aq8jpp08bf0j8bc28s6au4tkd.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.campushub.app"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

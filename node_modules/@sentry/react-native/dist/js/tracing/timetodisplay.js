@@ -1,0 +1,223 @@
+import { debug, fill, getActiveSpan, getSpanDescendants, SEMANTIC_ATTRIBUTE_SENTRY_ORIGIN, SPAN_STATUS_ERROR, SPAN_STATUS_OK, spanToJSON, startInactiveSpan } from '@sentry/core';
+import * as React from 'react';
+import { useState } from 'react';
+import { SPAN_ORIGIN_AUTO_UI_TIME_TO_DISPLAY, SPAN_ORIGIN_MANUAL_UI_TIME_TO_DISPLAY } from './origin';
+import { getRNSentryOnDrawReporter } from './timetodisplaynative';
+import { setSpanDurationAsMeasurement, setSpanDurationAsMeasurementOnSpan } from './utils';
+/**
+ * Flags of active spans with manual initial display.
+ */
+export const manualInitialDisplaySpans = new WeakMap();
+/**
+ * Flag full display called before initial display for an active span.
+ */
+const fullDisplayBeforeInitialDisplay = new WeakMap();
+/**
+ * Component to measure time to initial display.
+ *
+ * The initial display is recorded when the component prop `record` is true.
+ *
+ * <TimeToInitialDisplay record />
+ */
+export function TimeToInitialDisplay(props) {
+    const activeSpan = getActiveSpan();
+    if (activeSpan) {
+        manualInitialDisplaySpans.set(activeSpan, true);
+    }
+    const parentSpanId = activeSpan && spanToJSON(activeSpan).span_id;
+    return React.createElement(TimeToDisplay, { initialDisplay: props.record, parentSpanId: parentSpanId }, props.children);
+}
+/**
+ * Component to measure time to full display.
+ *
+ * The initial display is recorded when the component prop `record` is true.
+ *
+ * <TimeToInitialDisplay record />
+ */
+export function TimeToFullDisplay(props) {
+    const activeSpan = getActiveSpan();
+    const parentSpanId = activeSpan && spanToJSON(activeSpan).span_id;
+    return React.createElement(TimeToDisplay, { fullDisplay: props.record, parentSpanId: parentSpanId }, props.children);
+}
+function TimeToDisplay(props) {
+    const RNSentryOnDrawReporter = getRNSentryOnDrawReporter();
+    return (React.createElement(React.Fragment, null,
+        React.createElement(RNSentryOnDrawReporter, { initialDisplay: props.initialDisplay, fullDisplay: props.fullDisplay, parentSpanId: props.parentSpanId }),
+        props.children));
+}
+/**
+ * Starts a new span for the initial display.
+ *
+ * Returns current span if already exists in the currently active span.
+ *
+ * @deprecated Use `<TimeToInitialDisplay record={boolean}/>` component instead.
+ */
+export function startTimeToInitialDisplaySpan(options) {
+    const activeSpan = getActiveSpan();
+    if (!activeSpan) {
+        debug.warn('[TimeToDisplay] No active span found to attach ui.load.initial_display to.');
+        return undefined;
+    }
+    const existingSpan = getSpanDescendants(activeSpan).find((span) => spanToJSON(span).op === 'ui.load.initial_display');
+    if (existingSpan) {
+        debug.log('[TimeToDisplay] Found existing ui.load.initial_display span.');
+        return existingSpan;
+    }
+    const initialDisplaySpan = startInactiveSpan(Object.assign({ op: 'ui.load.initial_display', name: 'Time To Initial Display', startTime: spanToJSON(activeSpan).start_timestamp }, options));
+    if (!initialDisplaySpan) {
+        return undefined;
+    }
+    if (options === null || options === void 0 ? void 0 : options.isAutoInstrumented) {
+        initialDisplaySpan.setAttribute(SEMANTIC_ATTRIBUTE_SENTRY_ORIGIN, SPAN_ORIGIN_AUTO_UI_TIME_TO_DISPLAY);
+    }
+    else {
+        manualInitialDisplaySpans.set(activeSpan, true);
+        initialDisplaySpan.setAttribute(SEMANTIC_ATTRIBUTE_SENTRY_ORIGIN, SPAN_ORIGIN_MANUAL_UI_TIME_TO_DISPLAY);
+    }
+    return initialDisplaySpan;
+}
+/**
+ * Starts a new span for the full display.
+ *
+ * Returns current span if already exists in the currently active span.
+ *
+ * @deprecated Use `<TimeToFullDisplay record={boolean}/>` component instead.
+ */
+export function startTimeToFullDisplaySpan(options = {
+    timeoutMs: 30000,
+}) {
+    const activeSpan = getActiveSpan();
+    if (!activeSpan) {
+        debug.warn('[TimeToDisplay] No active span found to attach ui.load.full_display to.');
+        return undefined;
+    }
+    const descendantSpans = getSpanDescendants(activeSpan);
+    const initialDisplaySpan = descendantSpans.find((span) => spanToJSON(span).op === 'ui.load.initial_display');
+    if (!initialDisplaySpan) {
+        debug.warn('[TimeToDisplay] No initial display span found to attach ui.load.full_display to.');
+        return undefined;
+    }
+    const existingSpan = descendantSpans.find((span) => spanToJSON(span).op === 'ui.load.full_display');
+    if (existingSpan) {
+        debug.log('[TimeToDisplay] Found existing ui.load.full_display span.');
+        return existingSpan;
+    }
+    const fullDisplaySpan = startInactiveSpan(Object.assign({ op: 'ui.load.full_display', name: 'Time To Full Display', startTime: spanToJSON(initialDisplaySpan).start_timestamp }, options));
+    if (!fullDisplaySpan) {
+        return undefined;
+    }
+    const timeout = setTimeout(() => {
+        if (spanToJSON(fullDisplaySpan).timestamp) {
+            return;
+        }
+        fullDisplaySpan.setStatus({ code: SPAN_STATUS_ERROR, message: 'deadline_exceeded' });
+        fullDisplaySpan.end(spanToJSON(initialDisplaySpan).timestamp);
+        setSpanDurationAsMeasurement('time_to_full_display', fullDisplaySpan);
+        debug.warn('[TimeToDisplay] Full display span deadline_exceeded.');
+    }, options.timeoutMs);
+    fill(fullDisplaySpan, 'end', (originalEnd) => (endTimestamp) => {
+        clearTimeout(timeout);
+        originalEnd.call(fullDisplaySpan, endTimestamp);
+    });
+    if (options === null || options === void 0 ? void 0 : options.isAutoInstrumented) {
+        fullDisplaySpan.setAttribute(SEMANTIC_ATTRIBUTE_SENTRY_ORIGIN, SPAN_ORIGIN_AUTO_UI_TIME_TO_DISPLAY);
+    }
+    else {
+        fullDisplaySpan.setAttribute(SEMANTIC_ATTRIBUTE_SENTRY_ORIGIN, SPAN_ORIGIN_MANUAL_UI_TIME_TO_DISPLAY);
+    }
+    return fullDisplaySpan;
+}
+/**
+ *
+ */
+export function updateInitialDisplaySpan(frameTimestampSeconds, { activeSpan = getActiveSpan(), span = startTimeToInitialDisplaySpan(), } = {}) {
+    if (!span) {
+        debug.warn('[TimeToDisplay] No span found or created, possibly performance is disabled.');
+        return;
+    }
+    if (!activeSpan) {
+        debug.warn('[TimeToDisplay] No active span found to attach ui.load.initial_display to.');
+        return;
+    }
+    if (spanToJSON(span).parent_span_id !== spanToJSON(activeSpan).span_id) {
+        debug.warn('[TimeToDisplay] Initial display span is not a child of current active span.');
+        return;
+    }
+    if (spanToJSON(span).timestamp) {
+        debug.warn(`[TimeToDisplay] ${spanToJSON(span).description} span already ended.`);
+        return;
+    }
+    span.end(frameTimestampSeconds);
+    span.setStatus({ code: SPAN_STATUS_OK });
+    debug.log(`[TimeToDisplay] ${spanToJSON(span).description} span updated with end timestamp.`);
+    if (fullDisplayBeforeInitialDisplay.has(activeSpan)) {
+        fullDisplayBeforeInitialDisplay.delete(activeSpan);
+        debug.log(`[TimeToDisplay] Updating full display with initial display (${span.spanContext().spanId}) end.`);
+        updateFullDisplaySpan(frameTimestampSeconds, span);
+    }
+    setSpanDurationAsMeasurementOnSpan('time_to_initial_display', span, activeSpan);
+}
+function updateFullDisplaySpan(frameTimestampSeconds, passedInitialDisplaySpan) {
+    const activeSpan = getActiveSpan();
+    if (!activeSpan) {
+        debug.warn('[TimeToDisplay] No active span found to update ui.load.full_display in.');
+        return;
+    }
+    const existingInitialDisplaySpan = passedInitialDisplaySpan
+        || getSpanDescendants(activeSpan).find((span) => spanToJSON(span).op === 'ui.load.initial_display');
+    const initialDisplayEndTimestamp = existingInitialDisplaySpan && spanToJSON(existingInitialDisplaySpan).timestamp;
+    if (!initialDisplayEndTimestamp) {
+        fullDisplayBeforeInitialDisplay.set(activeSpan, true);
+        debug.warn(`[TimeToDisplay] Full display called before initial display for active span (${activeSpan.spanContext().spanId}).`);
+        return;
+    }
+    const span = startTimeToFullDisplaySpan({
+        isAutoInstrumented: true,
+    });
+    if (!span) {
+        debug.warn('[TimeToDisplay] No TimeToFullDisplay span found or created, possibly performance is disabled.');
+        return;
+    }
+    const spanJSON = spanToJSON(span);
+    if (spanJSON.timestamp) {
+        debug.warn(`[TimeToDisplay] ${spanJSON.description} (${spanJSON.span_id}) span already ended.`);
+        return;
+    }
+    if (initialDisplayEndTimestamp > frameTimestampSeconds) {
+        debug.warn('[TimeToDisplay] Using initial display end. Full display end frame timestamp is before initial display end.');
+        span.end(initialDisplayEndTimestamp);
+    }
+    else {
+        span.end(frameTimestampSeconds);
+    }
+    span.setStatus({ code: SPAN_STATUS_OK });
+    debug.log(`[TimeToDisplay] ${spanJSON.description} (${spanJSON.span_id}) span updated with end timestamp.`);
+    setSpanDurationAsMeasurement('time_to_full_display', span);
+}
+/**
+ * Creates a new TimeToFullDisplay component which triggers the full display recording every time the component is focused.
+ */
+export function createTimeToFullDisplay({ useFocusEffect, }) {
+    return createTimeToDisplay({ useFocusEffect, Component: TimeToFullDisplay });
+}
+/**
+ * Creates a new TimeToInitialDisplay component which triggers the initial display recording every time the component is focused.
+ */
+export function createTimeToInitialDisplay({ useFocusEffect, }) {
+    return createTimeToDisplay({ useFocusEffect, Component: TimeToInitialDisplay });
+}
+function createTimeToDisplay({ useFocusEffect, Component, }) {
+    const TimeToDisplayWrapper = (props) => {
+        const [focused, setFocused] = useState(false);
+        useFocusEffect(() => {
+            setFocused(true);
+            return () => {
+                setFocused(false);
+            };
+        });
+        return React.createElement(Component, Object.assign({}, props, { record: focused && props.record }));
+    };
+    TimeToDisplayWrapper.displayName = 'TimeToDisplayWrapper';
+    return TimeToDisplayWrapper;
+}
+//# sourceMappingURL=timetodisplay.js.map

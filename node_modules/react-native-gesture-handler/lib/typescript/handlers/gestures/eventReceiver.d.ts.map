@@ -1,0 +1,1 @@
+{"version":3,"file":"eventReceiver.d.ts","sourceRoot":"","sources":["../../../../src/handlers/gestures/eventReceiver.ts"],"names":[],"mappings":"AAGA,OAAO,EACL,iBAAiB,EACjB,kBAAkB,EAClB,uBAAuB,EACxB,MAAM,yBAAyB,CAAC;AAgCjC,wBAAgB,qBAAqB,CACnC,KAAK,EAAE,kBAAkB,GAAG,uBAAuB,GAAG,iBAAiB,QAwFxE;AAED,wBAAgB,cAAc,SAY7B;AAED,wBAAgB,aAAa,SAU5B"}

@@ -1,0 +1,11 @@
+{
+  "platforms": ["apple", "android"],
+  "android": {
+    "publication": {
+      "groupId": "host.exp.exponent",
+      "artifactId": "expo.modules.imageloader",
+      "version": "6.0.0",
+      "repository": "local-maven-repo"
+    }
+  }
+}

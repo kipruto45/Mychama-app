@@ -1,0 +1,15 @@
+{
+  "platforms": ["apple", "android"],
+  "apple": {
+    "modules": ["ImageModule"]
+  },
+  "android": {
+    "modules": ["expo.modules.image.ExpoImageModule"],
+    "publication": {
+      "groupId": "BareExpo",
+      "artifactId": "expo.modules.image",
+      "version": "3.0.11",
+      "repository": "local-maven-repo"
+    }
+  }
+}

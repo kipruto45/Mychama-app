@@ -1,0 +1,1 @@
+{"version":3,"file":"ExtraButtonProps.d.ts","sourceRoot":"","sources":["../../../../src/components/touchables/ExtraButtonProps.ts"],"names":[],"mappings":"AAAA,MAAM,MAAM,gBAAgB,GAAG;IAC7B,UAAU,CAAC,EAAE,OAAO,CAAC;IACrB,WAAW,CAAC,EAAE,MAAM,GAAG,MAAM,GAAG,IAAI,CAAC;IACrC,YAAY,CAAC,EAAE,MAAM,GAAG,IAAI,CAAC;IAC7B,UAAU,CAAC,EAAE,OAAO,CAAC;IACrB,SAAS,CAAC,EAAE,OAAO,CAAC;CACrB,CAAC"}

@@ -1,0 +1,1 @@
+{"version":3,"names":["_reactNative","require","_default","exports","default","NativeModules","PlatformConstants","Platform","constants"],"sourceRoot":"../../src","sources":["PlatformConstants.ts"],"mappings":";;;;;;AAAA,IAAAA,YAAA,GAAAC,OAAA;AAAuD,IAAAC,QAAA,GAAAC,OAAA,CAAAC,OAAA,GAMvCC,0BAAa,EAAEC,iBAAiB,IAC9CC,qBAAQ,CAACC,SAAS","ignoreList":[]}
