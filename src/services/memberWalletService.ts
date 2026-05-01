@@ -480,6 +480,7 @@ export const memberWalletService = {
     amount: string;
     paymentMethod: 'mpesa';
     phone: string;
+    pin: string;
     idempotencyKey?: string;
   }): Promise<MemberWalletWithdrawalFlow> {
     const response = await apiClient.post<unknown>('/v1/finance/member-wallet/withdrawals', {
@@ -487,6 +488,7 @@ export const memberWalletService = {
       amount: input.amount,
       payment_method: input.paymentMethod,
       phone: input.phone,
+      pin: input.pin,
       idempotency_key: input.idempotencyKey,
     });
     return mapWithdrawalFlow(unwrapData<Record<string, any>>(response));

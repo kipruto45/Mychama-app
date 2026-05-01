@@ -35,8 +35,11 @@ export const WalletWithdrawalReviewScreen: React.FC = () => {
   } = useMemberWalletFlowStore();
 
   const [phone, setPhone] = useState(normalizePhoneNumber(route.params.phone || user?.phone || ''));
+  const [pin, setPin] = useState('');
   const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [phoneError, setPhoneError] = useState<string | null>(null);
+  const [pinError, setPinError] = useState<string | null>(null);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   useEffect(() => {
     setLastVisitedScreen('WalletWithdrawalReview');
@@ -50,17 +53,24 @@ export const WalletWithdrawalReviewScreen: React.FC = () => {
 
   const handleConfirm = async () => {
     if (!normalizedPhone || normalizedPhone.length < 12) {
-      setError('Enter a valid phone number to continue.');
+      setPhoneError('Enter a valid phone number to continue.');
+      return;
+    }
+    if (!pin || pin.length < 4 || pin.length > 6 || !/^\d+$/.test(pin)) {
+      setPinError('Enter your 4–6 digit withdrawal PIN to continue.');
       return;
     }
     setSubmitting(true);
-    setError(null);
+    setPhoneError(null);
+    setPinError(null);
+    setSubmitError(null);
     try {
       const result = await memberWalletService.createWithdrawal({
         chamaId: route.params.chamaId,
         amount: route.params.amount,
         paymentMethod: route.params.paymentMethod,
         phone: normalizedPhone,
+        pin,
       });
       setPendingWithdrawalIntentId(result.intentId);
       setWithdrawalDraft({
@@ -77,7 +87,7 @@ export const WalletWithdrawalReviewScreen: React.FC = () => {
         typeof serviceError === 'object' && serviceError && 'message' in serviceError
           ? String((serviceError as { message?: string }).message || '')
           : '';
-      setError(message || 'We couldn’t submit your withdrawal right now.');
+      setSubmitError(message || 'We couldn’t submit your withdrawal right now.');
     } finally {
       setSubmitting(false);
     }
@@ -146,11 +156,24 @@ export const WalletWithdrawalReviewScreen: React.FC = () => {
             value={phone}
             onChangeText={(value) => {
               setPhone(value);
-              if (error) setError(null);
+              if (phoneError) setPhoneError(null);
             }}
             keyboardType="phone-pad"
-            error={error || undefined}
+            error={phoneError || undefined}
           />
+          <Input
+            label="Withdrawal PIN"
+            placeholder="••••"
+            value={pin}
+            onChangeText={(value) => {
+              setPin(value.replace(/[^0-9]/g, '').slice(0, 6));
+              if (pinError) setPinError(null);
+            }}
+            keyboardType="number-pad"
+            secureTextEntry
+            error={pinError || undefined}
+          />
+          {submitError ? <Text style={styles.submitError}>{submitError}</Text> : null}
         </Card>
 
         <Button
@@ -246,6 +269,12 @@ const styles = StyleSheet.create({
     padding: spacing[5],
     backgroundColor: '#FFFFFF',
     ...shadows.sm,
+  },
+  submitError: {
+    color: colors.error,
+    fontFamily: typography.fontFamily.medium,
+    fontSize: typography.fontSize.sm,
+    marginTop: spacing[2],
   },
 });
 

@@ -532,7 +532,7 @@ export const paymentService = {
     chama_id: string;
     amount: string;
     currency?: string;
-    payment_method: 'mpesa' | 'cash';
+    payment_method: 'mpesa' | 'cash' | 'bank' | 'wallet';
     purpose?: string;
     purpose_id?: string;
     description?: string;
@@ -620,7 +620,7 @@ export const paymentService = {
   async resolvePaymentReconciliationIssue(
     caseId: string,
     data: {
-      action: 'retry_verification' | 'mark_reconciled' | 'mark_failed';
+      action: 'retry_verification' | 'mark_reconciled' | 'mark_failed' | 'confirm_payment';
       notes?: string;
     }
   ): Promise<PaymentReconciliationCaseRecord> {
@@ -737,7 +737,7 @@ export const paymentService = {
 
   async importPaymentStatement(data: {
     chama_id: string;
-    payment_method: 'mpesa';
+    payment_method: 'mpesa' | 'bank';
     provider_name?: string;
     source_name?: string;
     statement_date?: string;
